@@ -4,7 +4,11 @@ import { fetchTopFreeApps } from "../store/appSlice";
 import { RootState } from "../store/store";
 import { Avatar, Card, Pagination, Spin } from "antd";
 
-const AppList: React.FC = () => {
+interface AppListProps {
+  searchQuery: string;
+}
+
+const AppList: React.FC<AppListProps> = ({ searchQuery }) => {
   const dispatch = useDispatch();
   const { topFreeApps, isLoading } = useSelector(
     (state: RootState) => state.apps
@@ -16,18 +20,27 @@ const AppList: React.FC = () => {
     dispatch(fetchTopFreeApps());
   }, [dispatch]);
 
+  const filteredApps = topFreeApps.filter((app: any) => {
+    const name = app["im:name"].label.toLowerCase();
+    const summary = app.summary.label.toLowerCase();
+    const title = app.title.label.toLowerCase();
+    return (
+      name.includes(searchQuery) ||
+      summary.includes(searchQuery) ||
+      title.includes(searchQuery)
+    );
+  });
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const currentApps = filteredApps.slice(startIndex, startIndex + itemsPerPage);
+
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
 
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentApps = topFreeApps.slice(startIndex, startIndex + itemsPerPage);
-
   return (
     <div className="p-4">
-      <h2 className="text-2xl font-bold mb-4 text-center">
-        Top Free Applications
-      </h2>
+      <h2 className="text-2xl font-bold mb-4 text-left">應用列表</h2>
       <div className="flex flex-col items-center flex-wrap gap-4 justify-center">
         {isLoading ? (
           <div className="flex justify-center items-center h-48 w-full">
@@ -63,7 +76,7 @@ const AppList: React.FC = () => {
         <Pagination
           current={currentPage}
           pageSize={itemsPerPage}
-          total={topFreeApps.length}
+          total={filteredApps.length}
           onChange={handlePageChange}
         />
       </div>
