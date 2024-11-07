@@ -3,13 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchTopFreeApps } from "../store/appSlice";
 import { RootState } from "../store/store";
 import { Avatar, Card, Pagination, Spin } from "antd";
+import { AppDispatch } from "../store/store";
 
 interface AppListProps {
   searchQuery: string;
 }
 
 const AppList: React.FC<AppListProps> = ({ searchQuery }) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const { topFreeApps, isLoading } = useSelector(
     (state: RootState) => state.apps
   );

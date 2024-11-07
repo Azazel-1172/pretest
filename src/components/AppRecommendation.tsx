@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchTopGrossingApps } from "../store/appSlice";
 import { RootState } from "../store/store";
 import { Spin } from "antd";
+import { AppDispatch } from "../store/store";
 
 interface AppRecommendationProps {
   searchQuery: string;
@@ -11,7 +12,7 @@ interface AppRecommendationProps {
 const AppRecommendation: React.FC<AppRecommendationProps> = ({
   searchQuery,
 }) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const { topGrossingApps, isLoading } = useSelector(
     (state: RootState) => state.apps
   );
