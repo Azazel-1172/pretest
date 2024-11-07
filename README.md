@@ -21,7 +21,7 @@ npm run dev
 - [x] 實現 responsive 設計
 - [x] 使用 Tailwind CSS
 - [x] 查詢 API 等數據時，有 loading 過場提升 UX
-- [ ] 滾動時會有過場動畫
+- [x] 滾動時會有過場動畫
 - [x] 實現 PWA（漸進式網頁應用）
 - [ ] 使用 Webpack 進行 JS chunk
 - [ ] 使用 Next.js 作為 Web 伺服器部署
